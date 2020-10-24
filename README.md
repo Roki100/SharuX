@@ -1,2 +1,1 @@
-# SharuX
-ShareX Upload server [WIP]
+### This project is WIP, and it does not provide its functionality yet.

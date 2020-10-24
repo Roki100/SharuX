@@ -1,6 +1,7 @@
 /*
     Useful stuff
 */
+
 const logger = require('./logger.js'), fs = require('fs');
 
 const _printLogo = () => {
