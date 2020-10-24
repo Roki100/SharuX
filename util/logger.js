@@ -17,9 +17,13 @@ function getDate() {
         if (n < 10) {
             n = "0" + n;
         }
-        return i;
+        return n;
     }
     return `[${day}-${month}-${year} | ${h}:${m}:${s}]`;
+}
+
+const _logo = (logo) => {
+    console.log(colors.brightGreen(logo));
 }
 
 const _ok = (message) => {
@@ -35,8 +39,14 @@ const _debug = (message) => {
         console.log(getDate(), colors.magenta('[DEBUG]', colors.reset(message)));
 }
 
+const _request = (type, path, response, time, ip, agent, country) => {
+    console.log(getDate(), colors.cyan('[REQUEST]', colors.reset(`${ip} (${country}) - ${type} ${path} (${response}) [${time}]`)));
+}
+
 
 
 module.exports.ok = _ok;
 module.exports.warn = _warn;
 module.exports.debug = _debug;
+module.exports.request = _request;
+module.exports.logo = _logo;
