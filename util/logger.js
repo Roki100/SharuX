@@ -40,7 +40,7 @@ const _debug = (message) => {
 }
 
 const _request = (type, path, response, time, ip, agent, country) => {
-    console.log(getDate(), colors.cyan('[REQUEST]', colors.reset(`${ip} (${country}) - ${type} ${path} (${response}) [${time}]`)));
+    console.log(getDate(), colors.cyan('[REQ]', colors.reset(`${ip} (${country}) - ${type} ${path} (${response}) [${time}]`)));
 }
 
 
