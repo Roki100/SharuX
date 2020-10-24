@@ -23,7 +23,7 @@ module.exports.launch = () => {
     app.use(helmet());
     app.use(useragent.express());
     app.use(morgan(function (tokens, req, res) {
-        logger.request(tokens.method(req, res), tokens.url(req, res), tokens.status(req, res), tokens['response-time'](req, res) + 'ms', req.ip || req._remoteAddress || (req.connection && req.connection.remoteAddress) || undefined, req.headers['user-agent'], req.ipInfo.country || 'N/A');
+        logger.request(tokens.method(req, res), tokens.url(req, res), tokens.status(req, res), tokens['response-time'](req, res) + 'ms', (req.ip || req._remoteAddress || (req.connection && req.connection.remoteAddress) || undefined).replace('::ffff:',''), req.headers['user-agent'], req.ipInfo.country || 'N/A');
     }));
 
     app.get('*', (req, res) => {
