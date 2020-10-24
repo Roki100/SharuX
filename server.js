@@ -14,3 +14,7 @@ if (!fs.existsSync('./uploads/')) {
 }
 logger.debug('Launching the server...');
 server.launch();
+
+process.on('SIGINT', () => {
+    logger.warn('Gracefully shutting down.'); process.exit();
+});
