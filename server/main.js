@@ -22,17 +22,15 @@ module.exports.launch = () => {
     app.use(expressip());
     app.use(helmet());
     app.use(useragent.express());
-    app.use(morgan(function (tokens, req, res) {
-        logger.request(tokens.method(req, res), tokens.url(req, res), tokens.status(req, res), tokens['response-time'](req, res) + 'ms', (req.ip || req._remoteAddress || (req.connection && req.connection.remoteAddress) || undefined).replace('::ffff:',''), req.headers['user-agent'], req.ipInfo.country || 'N/A');
+    app.use(morgan((tokens, req, res) => {
+        logger.request(tokens.method(req, res), tokens.url(req, res), tokens.status(req, res), tokens['response-time'](req, res) + 'ms', (req.ip || req._remoteAddress || (req.connection && req.connection.remoteAddress) || undefined).toString().replace('::ffff:',''), req.headers['user-agent'], req.ipInfo.country || 'N/A');
     }));
+    app.use(express.static(__dirname + '/public/'));
 
-    app.get('*', (req, res) => {
-        if(req.useragent.isBot) return res.sendStatus(200);
-        res.sendStatus(404);
-    });
+    require('./router').start(app);
 
     server.listen(port, bind);
     server.on('listening', () => {
-        logger.ok(`Server started on ${server.address().address}:${server.address().port}`);
+        logger.ok(`Server started on ${server.address().address.replace('::', '0.0.0.0')}:${server.address().port}`);
     });
 };

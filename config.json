@@ -1,5 +1,6 @@
 {
     "port": 1337,
     "debug": true,
-    "bind": "::"
+    "bind": "::",
+    "sizeLimit": 9007199254740991
 }
