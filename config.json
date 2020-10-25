@@ -2,5 +2,5 @@
     "port": 1337,
     "debug": true,
     "bind": "::",
-    "sizeLimit": 9007199254740991
+    "sizeLimit": "Infinity"
 }
