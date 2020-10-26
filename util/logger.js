@@ -6,7 +6,7 @@ const colors = require('colors/safe');
 const { debug } = require('../config.json');
 
 function getDate() {
-    let date = new Date()
+    let date = new Date();
     let day = zero(date.getDate());
     let month = zero(date.getMonth() + 1);
     let year = zero(date.getFullYear());
@@ -24,26 +24,24 @@ function getDate() {
 
 const _logo = (logo) => {
     console.log(colors.brightGreen(logo));
-}
+};
 
-const _ok = (message) => {
-    console.log(getDate(), colors.green('[OK]', colors.reset(message)));
-}
+const _ok = (message, ...args) => {
+    console.log(getDate(), colors.green('[OK]', colors.reset(message, ((args.length > 0) ? args.join(' ') : ''))));
+};
 
-const _warn = (message) => {
-    console.log(getDate(), colors.yellow('[WARN]', colors.reset(message)));
-}
+const _warn = (message, ...args) => {
+    console.log(getDate(), colors.yellow('[WARN]', colors.reset(message, colors.reset(message, ((args.length > 0) ? args.join(' ') : '')))));
+};
 
-const _debug = (message) => {
+const _debug = (message, ...args) => {
     if (debug)
-        console.log(getDate(), colors.magenta('[DEBUG]', colors.reset(message)));
-}
+        console.log(getDate(), colors.magenta('[DEBUG]', colors.reset(message, colors.reset(message, ((args.length > 0) ? args.join(' ') : '')))));
+};
 
 const _request = (type, path, response, time, ip, agent, country) => {
     console.log(getDate(), colors.cyan('[REQ]', colors.reset(`${ip} (${country}) - ${type} ${path} (${response}) [${time}]`)));
-}
-
-
+};
 
 module.exports.ok = _ok;
 module.exports.warn = _warn;

@@ -7,7 +7,7 @@ const fs = require('fs');
 const logger = require('../../util/logger.js');
 const api = [];
 let files = fs.readdirSync(__dirname + '/api/');
-files.forEach(file => { api.push(file) });
+files.forEach(file => { api.push(file); });
 
 
 let start = (app) => {
