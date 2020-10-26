@@ -2,5 +2,16 @@
     "port": 1337,
     "debug": true,
     "bind": "::",
-    "sizeLimit": "Infinity"
+    "sizeLimit": "Infinity",
+    "db": {
+        "db": "SharuX",
+        "user": "admin",
+        "pass": "",
+        "servers": [
+            {
+                "host": "localhost",
+                "port": 28015
+            }
+        ]
+    }
 }

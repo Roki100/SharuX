@@ -4,6 +4,7 @@
 
 const config = require('../config.json');
 const logger = require('../util/logger.js');
+const db = require('../util/db.js');
 const port = config.port || 1337, bind = config.bind || '::';
 const express = require('express');
 const http = require('http');
@@ -15,6 +16,7 @@ const rateLimit = require('express-rate-limit');
 const useragent = require('express-useragent');
 
 module.exports.launch = () => {
+    db.init();
     let app = express();
     let server = http.createServer(app);
 
