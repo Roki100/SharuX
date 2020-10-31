@@ -23,20 +23,49 @@ const limiter = rateLimit({
 router.use(json());
 //router.use(urlencoded({ extended: true }));
 
+
+// Responses
+const internalDBError = { "success": false, "message": "Internal server error - DataBase unreachable." };
+const noToken = { "success": false, "message": "No token was provided." };
+const noURL = { "success": false, "message": "No url was provided." };
+const incorrectToken = { "success": false, "message": "An incorrect token was provided." };
+const movingFileError = { "success": false, "message": "Internal server error while trying to move the file." };
+const urlExists = { "success": false, "message": "URL with generated name already exists. Please try again." }
+
 router.post('/api/shorten', async (req, res) => {
-    if (!await db.available()) return res.status(500).json({ "success": false, "message": "Internal server error - DataBase unreachable." });
-    let token = req.headers.token;
-    if (!token || token.length !== 69) return res.status(403).json({ "success": false, "message": "No token was provided." });
+    console.log(req.query)
+    console.log(req.body)
+    let browser = req.body.token == undefined ? false : true;
+    // let browser = req.body.token == undefined ? false : true;
+
+    if (!await db.available()) {
+        if (!browser) return res.status(500).json(internalDBError);
+        else return res.redirect('/?error=' + internalDBError.message)
+    }
+
+    let token = browser ? req.body.token : req.headers.token;
+    if (!token || token.length !== 69) {
+        if (!browser) return res.status(403).json(noToken);
+        else return res.redirect('/?error=' + noToken.message);
+    }
+
     let userInfo = await db.getUserInfo(token);
-    if (!userInfo) return res.status(403).json({ "success": false, "message": "Wrong token was provided." });
-    if (!req.body || !req.body.url) return res.status(400).json({ "success": false, "message": "No url was provided." });
+    if (!userInfo) {
+        if (!browser) return res.status(403).json(incorrectToken);
+        else return res.redirect('/?error=' + incorrectToken.message);
+    }
+
+    if (!req.body || !req.body.url) {
+        if (!browser) return res.status(400).json(noURL);
+        else return res.redirect('/?error=' + noURL.message)
+    }
 
     // Request configuration
-    let logic = req.headers.urllogic == 'zws' ? 'zws' : 'standard';
-    let length = req.headers.urllength > 200 ? 200 : req.headers.urllength < 10 ? 10 : req.headers.urllength || 10;
+    let logic = (browser ? req.body.logic : req.headers.urllogic) == 'zws' ? 'zws' : 'standard';
+    let length = !req.headers.urllength ? 15 : req.headers.urllength > 200 ? 200 : req.headers.urllength < 15 ? 15 : req.headers.urllength || 15;
     let urlString = util.characterLogic(logic, length);
     let durability = config.durabilityHeader == true ? (req.headers.mode == undefined ? config.db.durability : (req.headers.mode == 'safe') ? 'hard' : (req.headers.mode == 'fast') ? 'soft' : 'hard') : config.db.durability;
-    
+
 
     let dbObject = {
         name: encodeURIComponent(urlString),
@@ -45,7 +74,7 @@ router.post('/api/shorten', async (req, res) => {
         uploaderID: userInfo.id,
         redirects: 0
     }
-    
+
     let returnJson = {
         "success": true,
         "message": "Shortening complete",
@@ -57,10 +86,15 @@ router.post('/api/shorten', async (req, res) => {
     }
 
     let out = await db.shortenURL(dbObject, durability);
-    if (out == false) { return res.status(500).json({ "success": false, "message": "URL with generated name already exists. Please try again." }) }
+    if (out == false) {
+        if (!browser) return res.status(500).json(urlExists);
+        else return res.redirect('/?error=' + urlExists.message);
+    }
 
-    res.setHeader('Content-Type', 'application/json');
-    return res.status(200).json(returnJson);
+    if (!browser) {
+        res.setHeader('Content-Type', 'application/json');
+        return res.status(200).json(returnJson);
+    } else return res.redirect('/?message=' +  returnJson.url);
 });
 
 module.exports = router;

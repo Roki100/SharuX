@@ -79,8 +79,8 @@
     border: 5px solid #000000;
     border-radius: 5px;
   
-    background: rgb(24, 202, 0);
-    color: #555;
+    background: rgb(68 3 0);
+    color: #33ff00;
     line-height: normal;
     font-family: inherit;
     font-size: inherit;
@@ -194,7 +194,7 @@
     background-color: #3c3c3c8c;
 }
 
-.main .shorten select#uploadForm-logic { 
+.main .shorten select#shortenForm-logic { 
     outline: none;
     -webkit-appearance: none;
     /* padding: 1.2em 3em 1.3em 1.5em; */
@@ -204,8 +204,10 @@
     border: 5px solid #000000;
     border-radius: 5px;
   
-    background: rgb(24, 202, 0);
-    color: #555;
+    /* background: rgb(24, 202, 0); */
+    background: rgb(68 3 0);
+    /* color: #555; */
+    color: #33ff00;
     line-height: normal;
     font-family: inherit;
     font-size: inherit;
@@ -241,4 +243,15 @@
 .main .shorten form div label {
     color: #00ffad;
     margin-right: 10px;
+}
+
+.message {
+    font-family: 'Turret Road', cursive;
+}
+
+.main .shorten input {
+    background: black;
+    border: none;
+    color: white;
+    height: 20px;
 }
