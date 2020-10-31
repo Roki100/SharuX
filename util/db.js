@@ -78,6 +78,8 @@ const _getUserInfo = async (token) => {
 const _shortenURL = async (data, durability) => {
   if (await this.hasInSecondaryIndex('urls', data.name, 'name')) return false;
   await r.table('urls').insert(data, { durability: durability }).run();
+  let num = await r.table('users').get(data.uploaderID)('urls').add(1).run();
+  r.table('users').get(data.uploaderID).update({ urls: num }, { durability: 'soft' }).run({ noreply: true });
   return true;
 }
 
