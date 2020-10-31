@@ -19,24 +19,21 @@ const limiter = rateLimit({
     max: 20, // limit each IP to 20 requests per windowMs
     message: '<code>Too many requests.</code>'
 });
-//router.use(limiter);
+router.use(limiter);
+const multer = require('multer');
+const upload = multer();
 router.use(json());
-//router.use(urlencoded({ extended: true }));
-
 
 // Responses
 const internalDBError = { "success": false, "message": "Internal server error - DataBase unreachable." };
 const noToken = { "success": false, "message": "No token was provided." };
 const noURL = { "success": false, "message": "No url was provided." };
 const incorrectToken = { "success": false, "message": "An incorrect token was provided." };
-const movingFileError = { "success": false, "message": "Internal server error while trying to move the file." };
 const urlExists = { "success": false, "message": "URL with generated name already exists. Please try again." }
 
-router.post('/api/shorten', async (req, res) => {
-    console.log(req.query)
-    console.log(req.body)
+
+router.post('/api/shorten', upload.none(), async (req, res) => {
     let browser = req.body.token == undefined ? false : true;
-    // let browser = req.body.token == undefined ? false : true;
 
     if (!await db.available()) {
         if (!browser) return res.status(500).json(internalDBError);

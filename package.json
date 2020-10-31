@@ -13,6 +13,7 @@
     "express-useragent": "^1.0.15",
     "helmet": "^4.1.1",
     "morgan": "^1.10.0",
+    "multer": "^1.4.2",
     "random-string": "^0.2.0",
     "rethinkdb-ts": "^2.4.5"
   },
