@@ -50,6 +50,8 @@ const _stop = async () => {
 const _saveFile = async (data, durability) => {
   if (await this.hasInSecondaryIndex('files', data.name, 'name')) return false;
   await r.table('files').insert(data, { durability: durability }).run(); //{ durability: 'soft' }
+  let num = await r.table('users').get(data.uploaderID)('uploads').add(1).run();
+  r.table('users').get(data.uploaderID).update({ uploads: num }, { durability: 'soft' }).run({ noreply: true });
   return true;
 };
 

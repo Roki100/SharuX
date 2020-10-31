@@ -109,5 +109,15 @@ tmp/
 # Uploads
 uploads/
 
+# Testing DataBase
+db/
+
 # Config
 config.json
+
+# To do list
+TODO.md
+
+# Code trash
+shit.js
+tempshit.json
