@@ -1,0 +1,60 @@
+* {
+    text-align: center;
+    vertical-align: middle;
+    text-decoration: none;
+}
+
+body {
+    background: #0f110e;
+    margin: 0;
+}
+
+.title {
+    /* set the position */
+    position: fixed;
+    top: 0px;
+    right: 0px;
+    left: 0px;
+    margin-bottom: 50px;
+    margin-right: auto;
+    margin-left: auto;
+
+    /* overflow: hidden; */
+    border: none;
+    border-radius: 20px;
+
+    /* color */
+    background: #1d4a403b;
+    color: rgba(0, 247, 255, 0.808);
+
+    /* color: #0f110e; */
+    width: 800px;
+    font-family: 'Roboto Mono', monospace;
+    /*width: 100%;*/
+}
+
+.footer {
+    color: #08920cc2;
+    width: 700px;
+    
+    /* text */
+    font-family: 'Open Sans Condensed', sans-serif;
+    font-size: x-large;
+
+    /* so it doesnt move */
+    position: fixed;
+
+    /* center */
+    right: 0;
+    left: 0;
+    margin-right: auto;
+    margin-left: auto;
+    /*bottom: 0;*/
+}
+
+.neon {
+    text-shadow: 0 0 50px rgb(0, 255, 0); /* 15 also cool */
+}
+.blueneon {
+    text-shadow: 0 0 50px rgb(0, 255, 255); /* 15 also cool */
+}

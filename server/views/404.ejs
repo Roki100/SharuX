@@ -1,0 +1,42 @@
+<!-- <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,200&display=swap" rel="stylesheet">-->
+<!DOCTYPE html>
+<html lang='en'>
+    <head>
+        <meta charset="utf-8">
+        <title>SharuX - 404 - Page Not found.</title>
+
+        <!-- FONTS -->
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans+Condensed:wght@300&display=swap" rel="stylesheet">
+        
+        <!-- SHIT -->
+        <link rel="shortcut icon" href="/assets/favicon.png" />
+
+        <!-- CSS -->
+        <link rel="stylesheet" href="/assets/css/default.css" type="text/css">
+        <link rel="stylesheet" href="/assets/css/404.css" type="text/css">
+
+        <!-- META - todo: add more -->
+        <meta name="theme-color" content="#00ff00">
+        <meta property="og:title" content="SharuX - 404 - Page Not found.">
+        <meta name="twitter:title" content="SharuX - 404 - Page Not found.">
+    </head>
+
+<body>
+
+    <div class="title">
+        <h1 class="blueneon">SharuX - Feature-Rich ShareX uploader<h1>
+    </div>
+
+    <div class="main">
+        <h1 class="neon" style="color: rgb(0, 255, 0)"><%= errText %></h1>
+        <h2 class="neon" style="color: rgb(0, 255, 0)"><%= errCommentText %></h2>
+        <a class="neon" id="back-link" href="/" style="color: rgb(0, 255, 0)"><%= takeMeBackText %></a>
+    </div>
+
+    <%- include('./includes/footer'); %>
+
+</body>
+
+</html>

@@ -3,10 +3,13 @@
     "debug": true,
     "bind": "::",
     "sizeLimit": "Infinity",
+    "https": true,
+    "durabilityHeader": true,
     "db": {
         "db": "SharuX",
         "user": "admin",
         "pass": "",
+        "durability": "hard",
         "servers": [
             {
                 "host": "localhost",

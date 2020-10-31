@@ -13,8 +13,9 @@ if (!fs.existsSync('./uploads/')) {
     logger.ok('Created ./uploads/ folder.');
 }
 logger.debug('Launching the server...');
-server.launch();
+let srv = server.launch();
 
-process.on('SIGINT', () => {
+process.on('SIGINT', async () => {
+    await server.kill(srv);
     logger.warn('Gracefully shutting down.'); process.exit();
 });

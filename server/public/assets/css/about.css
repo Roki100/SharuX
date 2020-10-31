@@ -1,0 +1,29 @@
+.main {
+    /* color */
+    background: rgb(27, 27, 27);
+
+    /* font */
+    font-family: 'Montserrat', sans-serif;
+    font-size: 15px;
+
+    /* text-align: center; */
+
+    /* position */
+    margin-top: 130px;
+    margin-left: auto;
+    margin-right: auto;
+    width: fit-content;
+    padding: 1%;
+
+    /* border */
+    border-radius: 10px;
+    
+}
+
+.question {
+    color: rgb(0, 255, 0);
+}
+
+.answer {
+    color: rgba(0, 255, 0, 0.575);
+}

@@ -1,0 +1,244 @@
+.main {
+    padding-top: 80px;
+    display: inline-flex;
+}
+
+/* fucking upload */
+.main .upload form {
+    /* size */
+    max-width: 320px;
+    width: 90%;
+
+    /* idk distance? */
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 5.5%;
+    
+    /* color */
+    color: #505e6c;
+    box-shadow: 1px 1px 5px rgba(0,0,0,.1);
+    background-color: #00ff261a;
+    
+    /* looks */
+    padding: 40px;
+    border-radius: 4px;
+    filter: drop-shadow(2px 4px 6px black);
+}
+
+.main .upload form div {
+    /* hot shit */
+    margin: 8px;
+    text-align: left;
+}
+
+.main .upload form div label {
+    /* hotter shit */
+    text-align: left !important;
+    line-height: 150%;
+    font-size: .85em;
+}
+
+.main .upload form div div {
+    /* center the upload button */
+    border: none;
+    text-align: center;
+}
+
+.main .upload form div div button {
+    /* color */
+    color: rgb(0 255 43);
+    background-color: #0000008c;
+
+    /* looks */
+    padding: 10px 20px;
+    border: none;
+
+    /* text */
+    text-align: center;
+    text-decoration: none;
+    font-size: 15px;
+
+    /* tbh idk */
+    display: inline-block;
+}
+
+.main .upload form div button:hover {
+    /* show button LOL */
+    cursor: pointer;
+    padding: 10px 20px;
+    background-color: #3c3c3c8c;
+}
+
+.main .upload select#uploadForm-logic { 
+    outline: none;
+    -webkit-appearance: none;
+    /* padding: 1.2em 3em 1.3em 1.5em; */
+    margin: 0;
+  
+    transition: border-color 0.2s;
+    border: 5px solid #000000;
+    border-radius: 5px;
+  
+    background: rgb(24, 202, 0);
+    color: #555;
+    line-height: normal;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+}
+
+.main .upload input#uploadForm-token {
+    background: black;
+    border: none;
+    color: white;
+    height: 20px;
+}
+
+.main .upload input#uploadForm-file {
+    /* background-color: #05298b63; */
+    background-color: #00000063;
+    border: none;
+    border-radius: 5px;
+    width: 250px;
+    height: 50%;
+    padding: 12px 20px;
+    margin: 4px 0;
+    box-sizing: border-box;
+    color: white;
+    filter: drop-shadow(2px 4px 6px black);
+}
+
+.main .upload form h3 {
+    color: #00ff89;
+    filter: drop-shadow(2px 4px 6px black);
+}
+
+.main .upload form div label {
+    color: #00ffad;
+    margin-right: 10px;
+}
+  
+
+
+
+
+
+
+
+
+/* fucking shortener */
+.main .shorten form {
+    /* size */
+    max-width: 320px;
+    width: 90%;
+    height: 230.8px;
+
+    /* idk distance? */
+    margin-left: 15.7px;
+    margin-right: auto;
+    margin-top: 6.1%;
+    
+    /* color */
+    color: #505e6c;
+    box-shadow: 1px 1px 5px rgba(0,0,0,.1);
+    background-color: #00ff261a;
+    
+    /* looks */
+    padding: 40px;
+    border-radius: 4px;
+    filter: drop-shadow(2px 4px 6px black);
+    
+}
+
+.main .shorten form div {
+    /* hot shit */
+    margin: 8px;
+    text-align: left;
+}
+
+.main .shorten form div label {
+    /* hotter shit */
+    text-align: left !important;
+    line-height: 150%;
+    font-size: .85em;
+}
+
+.main .shorten form div div {
+    /* center the upload button */
+    border: none;
+    text-align: center;
+}
+
+.main .shorten form div div button {
+    /* color */
+    color: rgb(0 255 43);
+    background-color: #0000008c;
+
+    /* looks */
+    padding: 10px 20px;
+    border: none;
+
+    /* text */
+    text-align: center;
+    text-decoration: none;
+    font-size: 15px;
+
+    /* tbh idk */
+    display: inline-block;
+}
+
+.main .shorten form div button:hover {
+    /* show button LOL */
+    cursor: pointer;
+    padding: 10px 20px;
+    background-color: #3c3c3c8c;
+}
+
+.main .shorten select#uploadForm-logic { 
+    outline: none;
+    -webkit-appearance: none;
+    /* padding: 1.2em 3em 1.3em 1.5em; */
+    margin: 0;
+  
+    transition: border-color 0.2s;
+    border: 5px solid #000000;
+    border-radius: 5px;
+  
+    background: rgb(24, 202, 0);
+    color: #555;
+    line-height: normal;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+}
+
+.main .shorten input#uploadForm-token {
+    background: black;
+    border: none;
+    color: white;
+    height: 20px;
+}
+
+.main .shorten input#uploadForm-file {
+    /* background-color: #05298b63; */
+    background-color: #00000063;
+    border: none;
+    border-radius: 5px;
+    width: 250px;
+    height: 50%;
+    padding: 12px 20px;
+    margin: 4px 0;
+    box-sizing: border-box;
+    color: white;
+    filter: drop-shadow(2px 4px 6px black);
+}
+
+.main .shorten form h3 {
+    color: #00ff89;
+    filter: drop-shadow(2px 4px 6px black);
+}
+
+.main .shorten form div label {
+    color: #00ffad;
+    margin-right: 10px;
+}

@@ -1,0 +1,93 @@
+<!-- <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,200&display=swap" rel="stylesheet">-->
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    <meta charset="utf-8">
+    <title>SharuX</title>
+
+    <!-- FONTS -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans+Condensed:wght@300&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
+    <!-- LIBS -->
+
+
+    <!-- SHIT -->
+    <link rel="shortcut icon" href="/assets/favicon.png" />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/assets/css/default.css" type="text/css">
+    <link rel="stylesheet" href="/assets/css/index.css" type="text/css">
+
+    <!-- META - todo: add more -->
+    <meta name="theme-color" content="#00ff00">
+    <meta property="og:title" content="SharuX">
+    <meta name="twitter:title" content="SharuX">
+</head>
+
+<body>
+
+    <%- include('./includes/navbar'); %>
+
+    <!--<div class="title">
+        <h1 class="blueneon">SharuX - Feature-Rich ShareX uploader<h1>
+    </div>-->
+
+
+    <div class="main">
+        <div class="upload">
+            <form action="/api/upload" method="POST" , enctype="multipart/form-data" , name="uploadForm" ,
+                id="uploadForm">
+                <h3 class="boxTitle">Upload</h3>
+                <div>
+                    <label for="uploadForm-file">File: </label><input type="file" id="uploadForm-file" form="uploadForm" required>
+                </div>
+
+                <div>
+                    <label for="uploadForm-file">Token: </label><input type="text" id="uploadForm-token" form="uploadForm" required>
+                </div>
+
+                <div>
+                    <label for="uploadForm-logic">URL Logic:</label><select name="logic" id="uploadForm-logic"
+                        form="uploadForm">
+                        <option value="" disabled selected>Please select an option&hellip;</option>
+                        <option value="standard">Standard</option>
+                        <option value="zws">Zero Width Spaces</option>
+                    </select>
+                </div>
+
+                <div>
+                    <div>
+                        <button type="submit">Upload</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="shorten">
+            <form action="/api/shorten" method="POST" , enctype="multipart/form-data" , name="shortenForm" ,
+                id="shortenForm">
+                <h3 class="boxTitle">URL Shortener</h3>
+
+                <div>
+                    <label for="shortenForm-url">URL: </label><input type="text" id="shortenForm-url" required>
+                </div>
+                <div>
+                    <label for="shortenForm-token">Token: </label><input type="text" id="shortenForm-token" required>
+                </div>
+
+                <div>
+                    <div>
+                        <button type="submit">Shorten</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <%- include('./includes/footer'); %>
+
+</body>
+
+</html>

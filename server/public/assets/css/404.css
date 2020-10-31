@@ -1,0 +1,34 @@
+.main {
+    /* color */
+    background: rgb(27, 27, 27);
+
+    /* font */
+    font-family: 'Montserrat', sans-serif;
+    font-size: xx-large;
+
+    /* text-align: center; */
+
+    /* position */
+    margin-top: 250px;
+    margin-left: auto;
+    margin-right: auto;
+    width: fit-content;
+    padding: 1%;
+
+    /* border */
+    border-radius: 10px;
+    
+}
+
+#back-link {
+    padding: 1%;
+    border:none;
+    border-radius: 20px;
+    background:rgb(31, 31, 31);
+}
+
+#back-link:hover{
+    background: rgb(20, 20, 20);
+    transform: translateY(3);
+    padding: 1.5%;
+}

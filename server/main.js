@@ -20,6 +20,8 @@ module.exports.launch = () => {
     let app = express();
     let server = http.createServer(app);
 
+    app.set('view engine', 'ejs');
+    app.set('views', __dirname + '/views');
     app.set('trust proxy', true);
     app.use(expressip());
     app.use(helmet());
@@ -35,4 +37,12 @@ module.exports.launch = () => {
     server.on('listening', () => {
         logger.ok(`Server started on ${server.address().address.replace('::', '0.0.0.0')}:${server.address().port}`);
     });
+    return server;
+};
+
+module.exports.kill = async (server) => {
+    logger.warn('Closing the web server...');
+    await server.close();
+    logger.warn('Closed the web server.');
+    await db.stop();
 };

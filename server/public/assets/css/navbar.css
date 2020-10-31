@@ -1,0 +1,52 @@
+.navbar {
+    /* position */
+    position: fixed;
+    display: block;
+    right: 0px;
+    left: 0px;
+    top: 0px;
+
+    /* color */
+    color: white;
+
+    /* text */
+    text-align: center;
+    font-family: 'Spartan', sans-serif;
+}
+
+.navbar a {
+    /* remove the coloring */
+    text-decoration: none!important;
+
+    /* looks */
+    color: red;
+    padding: 14px 16px;
+    background: #ff00000f;
+
+    /* placement */
+    float: left;
+}
+
+.navbar a.right {
+    /* placement */
+    float: right;
+}
+
+.navbar a:hover {
+    /* looks */
+    cursor: pointer;
+
+    /* highlight */
+    color: white;
+    background: rgba(255, 0, 0, 0.425);
+
+    /* looks */
+    border-radius: 5%;
+}
+
+.navbar img {
+    padding: 5px 15px;
+    float: left;
+    width: 35px;
+    height: 35px;
+}
