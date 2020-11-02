@@ -1,3 +1,6 @@
+// Custom Shit
+const db = require('../../util/db.js');
+
 const noToken = { "success": false, "message": "No token was provided." };
 const incorrectToken = { "success": false, "message": "An incorrect token was provided." };
 const internalDBError = { "success": false, "message": "Internal server error - DataBase unreachable." };
@@ -24,7 +27,7 @@ async function authentication(req, res, next) {
   }
 
   // Make it so you can access userdata everywhere.
-  req.userData = userData;
+  req.userInfo = userInfo;
   req.userToken = token;
   req.browser = browser;
 

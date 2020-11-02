@@ -29,7 +29,7 @@ const authentication = require('../../middleware/authentication.js');
 const noURL = { "success": false, "message": "No url was provided." };
 const urlExists = { "success": false, "message": "URL with generated name already exists. Please try again." };
 
-router.post('/api/shorten', authentication, upload.none(), async (req, res) => {
+router.post('/api/shorten', upload.none(), authentication, async (req, res) => {
     if (!req.body || !req.body.url) {
         if (!req.browser) return res.status(400).json(noURL);
         else return res.redirect('/?error=' + noURL.message);
@@ -44,19 +44,19 @@ router.post('/api/shorten', authentication, upload.none(), async (req, res) => {
     let dbObject = {
         name: encodeURIComponent(urlString),
         sourceURL: req.body.url,
-        uploaderName: userInfo.name,
-        uploaderID: userInfo.id,
+        uploaderName: req.userInfo.name,
+        uploaderID: req.userInfo.id,
         redirects: 0
     };
 
     let returnJson = {
         "success": true,
         "message": "Shortening complete",
-        "user": userInfo.name,
+        "user": req.userInfo.name,
         "sourceURL": req.body.url,
         "encodedName": encodeURIComponent(urlString),
         "name": urlString, // make this url from the ummmmmmm db shit
-        "url": `http${config.https ? 's' : ''}://${userInfo.subdomain}.${userInfo.domain}/s/${urlString}`
+        "url": `http${config.https ? 's' : ''}://${req.userInfo.subdomain}.${req.userInfo.domain}/s/${urlString}`
     };
 
     let out = await db.shortenURL(dbObject, durability);

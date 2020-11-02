@@ -63,15 +63,17 @@ router.post('/api/upload', authentication, async (req, res) => {
     let day = util.addZero(date.getDate());
 
     // There is probably a better way to do this, blame MILLION for shit code:
-    if (!existsSync(__dirname + `/../../../../uploads/${userInfo.name}/${year}/${month}/${day}`))
-        mkdirSync(__dirname + `/../../../../uploads/${userInfo.name}/${year}/${month}/${day}`, { recursive: true });
+    let correctPath = resolve(__dirname + `/../../../uploads/${req.userInfo.name}/${year}/${month}/${day}`)
+    if (!existsSync(correctPath))
+        mkdirSync(correctPath, { recursive: true });
 
-    let filePath = util.createFilePath(`uploads/${userInfo.name}/${year}/${month}/${day}/${req.files.file.name}`.replace('_', '-'));
+    let filePath = util.createFilePath(`uploads/${req.userInfo.name}/${year}/${month}/${day}/${req.files.file.name}`.replace('_', '-'));
     let fullFilePath = resolve(__dirname + '../../../../' + filePath);
+    console.log(fullFilePath)
 
     req.files.file.mv(fullFilePath, async (err) => {
         if (err) {
-            logger.error(`Cannot move file ${req.files.file.name} to ${fullFilePath} - upload for user ${req.userToken}\n${err}`); // change to username later
+            logger.error(`Cannot move file ${req.files.file.name} to ${fullFilePath} - upload for user ${req.userInfo.name}\n${err}`); // change to username later
             if (!req.browser) return res.status(500).json(movingFileError);
             else return res.redirect('/?error=' + movingFileError.message);
         }
@@ -79,8 +81,8 @@ router.post('/api/upload', authentication, async (req, res) => {
         let dbObject = {
             name: encodeURIComponent(urlString),
             path: '/' + filePath,
-            uploaderName: userInfo.name,
-            uploaderID: userInfo.id,
+            uploaderName: req.userInfo.name,
+            uploaderID: req.userInfo.id,
             views: 0,
             originalName: req.files.file.name,
             size: req.files.file.size
@@ -89,12 +91,12 @@ router.post('/api/upload', authentication, async (req, res) => {
         let returnJson = {
             "success": true,
             "message": "Upload complete",
-            "user": userInfo.name,
+            "user": req.userInfo.name,
             "fileName": req.files.file.name,
             "fileSize": req.files.file.size,
             "encodedName": encodeURIComponent(urlString),
             "name": urlString, // make this url from the ummmmmmm db shit
-            "url": `http${config.https ? 's' : ''}://${userInfo.subdomain}.${userInfo.domain}/${urlString}`
+            "url": `http${config.https ? 's' : ''}://${req.userInfo.subdomain}.${req.userInfo.domain}/${urlString}`
         };
 
         let out = await db.saveFile(dbObject, durability);
