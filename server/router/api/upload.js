@@ -30,37 +30,16 @@ router.use(fileUpload({
     },
     abortOnLimit: true
 }));
-
+const authentication = require('../../middleware/authentication.js');
 
 // Responses
-const internalDBError = { "success": false, "message": "Internal server error - DataBase unreachable." };
-const noToken = { "success": false, "message": "No token was provided." };
-const noFile = { "success": false, "message": "No token was provided." };
-const incorrectToken = { "success": false, "message": "An incorrect token was provided." };
+const noFile = { "success": false, "message": "No file was provided." };
 const movingFileError = { "success": false, "message": "Internal server error while trying to move the file." };
 const fileAlreadyExists = { "success": false, "message": "File with generated name already exists. Please try again." };
 
-router.post('/api/upload', async (req, res) => {
-    let browser = req.body == {} ? false : true;
-    // Errors
-    if (!await db.available()) {
-        if (!browser) return res.status(500).json(internalDBError);
-        else return res.redirect('/?error=' + internalDBError.message);
-    }
-
-    let token = browser ? req.body.token : req.headers.token;
-    if (!token || token.length !== 69) {
-        if (!browser) return res.status(403).json(noToken);
-        else return res.redirect('/?error=' + noToken.message);
-    }
-
-    let userInfo = await db.getUserInfo(token);
-    if (!userInfo) {
-        if (!browser) return res.status(403).json(incorrectToken);
-        else return res.redirect('/?error=' + incorrectToken.message);
-    }
+router.post('/api/upload', authentication, async (req, res) => {
     if (!req.files || !req.files.file) {
-        if (!browser) return res.status(400).json(noFile);
+        if (!req.browser) return res.status(400).json(noFile);
         else return res.redirect('/?error=' + noFile.message);
     }
 
@@ -72,7 +51,7 @@ router.post('/api/upload', async (req, res) => {
     if (fileFunction !== undefined) await fileFunction(req.files.file);
 
     // Request configuration
-    let logic = (browser ? req.body.logic : req.headers.urllogic) == 'zws' ? 'zws' : 'standard';
+    let logic = (req.browser ? req.body.logic : req.headers.urllogic) == 'zws' ? 'zws' : 'standard';
     let length = !req.headers.urllength ? 15 : req.headers.urllength > 200 ? 200 : req.headers.urllength < 15 ? 15 : req.headers.urllength || 15;
     let urlString = util.characterLogic(logic, length);
     let durability = config.durabilityHeader == true ? (req.headers.mode == undefined ? config.db.durability : (req.headers.mode == 'safe') ? 'hard' : (req.headers.mode == 'fast') ? 'soft' : 'hard') : config.db.durability;
@@ -92,8 +71,8 @@ router.post('/api/upload', async (req, res) => {
 
     req.files.file.mv(fullFilePath, async (err) => {
         if (err) {
-            logger.error(`Cannot move file ${req.files.file.name} to ${fullFilePath} - upload for user ${token}\n${err}`); // change to username later
-            if (!browser) return res.status(500).json(movingFileError);
+            logger.error(`Cannot move file ${req.files.file.name} to ${fullFilePath} - upload for user ${req.userToken}\n${err}`); // change to username later
+            if (!req.browser) return res.status(500).json(movingFileError);
             else return res.redirect('/?error=' + movingFileError.message);
         }
 
@@ -120,14 +99,14 @@ router.post('/api/upload', async (req, res) => {
 
         let out = await db.saveFile(dbObject, durability);
         if (out == false) {
-            if (!browser) return res.status(500).json(fileAlreadyExists);
+            if (!req.browser) return res.status(500).json(fileAlreadyExists);
             else return res.redirect('/?error=' + fileAlreadyExists.message);
         }
 
-        if (!browser) {
+        if (!req.browser) {
             res.setHeader('Content-Type', 'application/json');
             return res.status(200).json(returnJson);
-        } else return res.redirect('/?message=' +  returnJson.url);
+        } else return res.redirect('/?message=' + returnJson.url);
     });
 });
 

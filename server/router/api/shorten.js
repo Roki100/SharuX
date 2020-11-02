@@ -23,46 +23,23 @@ router.use(limiter);
 const multer = require('multer');
 const upload = multer();
 router.use(json());
+const authentication = require('../../middleware/authentication.js');
 
 // Responses
-const internalDBError = { "success": false, "message": "Internal server error - DataBase unreachable." };
-const noToken = { "success": false, "message": "No token was provided." };
 const noURL = { "success": false, "message": "No url was provided." };
-const incorrectToken = { "success": false, "message": "An incorrect token was provided." };
-const urlExists = { "success": false, "message": "URL with generated name already exists. Please try again." }
+const urlExists = { "success": false, "message": "URL with generated name already exists. Please try again." };
 
-
-router.post('/api/shorten', upload.none(), async (req, res) => {
-    let browser = req.body.token == undefined ? false : true;
-
-    if (!await db.available()) {
-        if (!browser) return res.status(500).json(internalDBError);
-        else return res.redirect('/?error=' + internalDBError.message)
-    }
-
-    let token = browser ? req.body.token : req.headers.token;
-    if (!token || token.length !== 69) {
-        if (!browser) return res.status(403).json(noToken);
-        else return res.redirect('/?error=' + noToken.message);
-    }
-
-    let userInfo = await db.getUserInfo(token);
-    if (!userInfo) {
-        if (!browser) return res.status(403).json(incorrectToken);
-        else return res.redirect('/?error=' + incorrectToken.message);
-    }
-
+router.post('/api/shorten', authentication, upload.none(), async (req, res) => {
     if (!req.body || !req.body.url) {
-        if (!browser) return res.status(400).json(noURL);
-        else return res.redirect('/?error=' + noURL.message)
+        if (!req.browser) return res.status(400).json(noURL);
+        else return res.redirect('/?error=' + noURL.message);
     }
 
     // Request configuration
-    let logic = (browser ? req.body.logic : req.headers.urllogic) == 'zws' ? 'zws' : 'standard';
+    let logic = (req.browser ? req.body.logic : req.headers.urllogic) == 'zws' ? 'zws' : 'standard';
     let length = !req.headers.urllength ? 15 : req.headers.urllength > 200 ? 200 : req.headers.urllength < 15 ? 15 : req.headers.urllength || 15;
     let urlString = util.characterLogic(logic, length);
     let durability = config.durabilityHeader == true ? (req.headers.mode == undefined ? config.db.durability : (req.headers.mode == 'safe') ? 'hard' : (req.headers.mode == 'fast') ? 'soft' : 'hard') : config.db.durability;
-
 
     let dbObject = {
         name: encodeURIComponent(urlString),
@@ -70,7 +47,7 @@ router.post('/api/shorten', upload.none(), async (req, res) => {
         uploaderName: userInfo.name,
         uploaderID: userInfo.id,
         redirects: 0
-    }
+    };
 
     let returnJson = {
         "success": true,
@@ -80,18 +57,18 @@ router.post('/api/shorten', upload.none(), async (req, res) => {
         "encodedName": encodeURIComponent(urlString),
         "name": urlString, // make this url from the ummmmmmm db shit
         "url": `http${config.https ? 's' : ''}://${userInfo.subdomain}.${userInfo.domain}/s/${urlString}`
-    }
+    };
 
     let out = await db.shortenURL(dbObject, durability);
     if (out == false) {
-        if (!browser) return res.status(500).json(urlExists);
+        if (!req.browser) return res.status(500).json(urlExists);
         else return res.redirect('/?error=' + urlExists.message);
     }
 
-    if (!browser) {
+    if (!req.browser) {
         res.setHeader('Content-Type', 'application/json');
         return res.status(200).json(returnJson);
-    } else return res.redirect('/?message=' +  returnJson.url);
+    } else return res.redirect('/?message=' + returnJson.url);
 });
 
 module.exports = router;
