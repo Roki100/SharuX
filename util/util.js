@@ -4,7 +4,21 @@
 
 const logger = require('./logger.js'), fs = require('fs');
 const randomString = require('random-string');
+const isFileUtf8 = require('is-file-utf8');
 const zws_chars = ['\u180E', '\u200B', '\uFEFF', '\u200C', '\u200D', '\u2060'];
+const fileTypeMap = new Map();
+const file_types = {
+    image: ['png', 'jpg', 'jpeg', 'gif'],
+    video: ['mov', 'mkv', 'mp4', 'avi'],
+    audio: ['mp3', 'flac', 'opus', 'wav']
+};
+Object.entries(file_types).forEach(e => {
+    const [key, val] = e;
+    //fileTypeMap.set(val, key);
+    val.forEach(e => {
+        fileTypeMap.set(e, key);
+    });
+});
 
 const _printLogo = () => {
     const logo = fs.readdirSync(__dirname + '/logo/');
@@ -59,9 +73,15 @@ const _createFilePath = (fileName) => {
     } else return fileName
 };
 
+const _getFileType = async (extension, path) => {
+    if (await isFileUtf8(path)) return 'text';
+    return fileTypeMap.get(extension) || 'other';
+};
+
 module.exports.printLogo = _printLogo;
 module.exports.characterLogic = _characterLogic;
 module.exports.createFilePath = _createFilePath;
 module.exports.addZero = _addZero;
 module.exports.genZws = _genZws;
 module.exports.generateToken = _generateToken;
+module.exports.getFileType = _getFileType;

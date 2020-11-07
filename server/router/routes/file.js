@@ -26,11 +26,30 @@ router.get('/f/:file', async (req, res) => {
     
     let arr = file.originalName.split('.');
     let fileExtension = arr[arr.length - 1];
-    let fileData = fs.readFileSync(path.resolve(__dirname + '../../../../' + file.path), 'UTF8');
-    let output = hljs.highlightAuto(fileData).value
-    if(fileExtension == 'js') {
-        res.render('files/text', { contents: output });
+    let filePath = path.resolve(__dirname + '../../../../' + file.path);
+
+    let type = await util.getFileType(fileExtension, filePath);
+    
+    switch (type) {
+        case 'image':
+            // todo
+            break;
+        case 'video':
+            // todo
+            break;
+        case 'audio':
+            // todo
+            break;
+        case 'text':
+            let fileData = fs.readFileSync(filePath, 'UTF8');
+            let output = hljs.highlightAuto(fileData).value
+            res.render('files/text', { contents: output });
+            break;
+        case 'other':
+            // redir to raw
+            break;
     }
+
 });
 
 module.exports = router;
