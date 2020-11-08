@@ -7,6 +7,7 @@ const config = require('../../../config.json');
 const util = require('../../../util/util.js');
 const db = require('../../../util/db.js');
 const logger = require('../../../util/logger.js');
+const { version } = require('../../../package.json');
 
 // Router
 const { Router } = require('express');
@@ -27,6 +28,7 @@ router.get('/f/:file', async (req, res) => {
     let arr = file.originalName.split('.');
     let fileExtension = arr[arr.length - 1];
     let filePath = path.resolve(__dirname + '../../../../' + file.path);
+    let fileName = file.originalName;
 
     let type = await util.getFileType(fileExtension, filePath);
     
@@ -43,7 +45,7 @@ router.get('/f/:file', async (req, res) => {
         case 'text':
             let fileData = fs.readFileSync(filePath, 'UTF8');
             let output = hljs.highlightAuto(fileData).value
-            res.render('files/text', { contents: output });
+            res.render('files/text', { fileName: fileName, userName: file.uploaderName, rawFileURL: file.name, URL: req.protocol+'://'+req.get('host')+req.path, contents: output, version: version });
             break;
         case 'other':
             // redir to raw

@@ -1,0 +1,63 @@
+.title p {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+.title {
+    /*margin-bottom: 25px;*/
+    margin-bottom: 0;
+    /*float: right;*/
+    padding: 0.7rem; /*inherit;*/
+    background: #0A0A0A;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    display: table;/*inline-block;*/
+    position: fixed;
+    /* top: 0%; */
+    bottom: 0%;
+    right: 0%;
+    /*margin-left: auto;*/
+    /*margin-right: auto;*/
+    border-radius: 0.5em;
+    /*max-width: 1%;*/
+    /*box-shadow: 0 0 50px rgb(0, 255, 0);*/
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    z-index: +1000;
+    font-size: 0.8rem;
+    text-align: right;
+}
+a {
+    color: red;
+    text-decoration: underline;
+    margin-right: 2px;
+}
+.title .uploader {
+    /* text-align: center; */
+    /* max-width: 1%; */
+}
+.title .fileInfo {
+    /* margin-bottom: 0.7rem; */
+    margin-bottom: 0.17rem;
+    /* max-width: 1%; */
+}
+body {
+    margin-left: 2rem;
+}
+
+body::-webkit-scrollbar {
+    width: 12px;
+}
+body::-webkit-scrollbar-track {
+    background: rgb(43, 43, 43);
+}
+body::-webkit-scrollbar-thumb {
+    background-color: blue;
+    border-radius: 20px;
+    border: 3px solid rgb(43, 43, 43);
+}
+
+pre {
+    font-family: monospace;
+}

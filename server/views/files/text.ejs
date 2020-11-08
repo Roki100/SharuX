@@ -1,3 +1,25 @@
-<link rel="stylesheet" href="/assets/css/highlightjs/xt256.css">
-<script src="/assets/js/highlightjs/highlightjs-line-numbers.js"></script>
-<pre class="hljs"><%- contents %></pre>
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title><%= fileName %> - SharuX</title>
+</head>
+
+<body>
+    <div class="title">
+    <!--<p class="fileInfo">You are viewing <%= fileName %> file uploaded via SharuX.</p>
+    <p class="uploader">This file was uploaded by <%= userName %>.</p>-->
+    <p>SharuX <%= version %></p>
+    <p class="fileInfo"><%= fileName %></p>
+    <p class="uploader">Uploader: <%= userName %></p>
+    <a href="https://twitter.com/share?url=<%= URL %>">Twitter</a>
+    <a href="/raw/<%= rawFileURL %>">raw</a>
+    </div>
+    <link rel="stylesheet" href="/assets/css/highlightjs/xt256.css">
+    <link rel="stylesheet" href="/assets/css/textFile.css">
+    <script src="/assets/js/highlightjs/highlightjs-line-numbers.js"></script>
+    <pre class="hljs"><%- contents %></pre>
+</body>
+
+</html>
