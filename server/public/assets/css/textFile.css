@@ -28,6 +28,10 @@
     font-size: 0.8rem;
     text-align: right;
 }
+.title:hover {
+    /* opacity: 0.15; */
+    opacity: 0.25;
+}
 a {
     color: red;
     text-decoration: underline;
