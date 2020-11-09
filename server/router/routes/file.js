@@ -17,17 +17,6 @@ const router = Router();
 //const hljs = require('highlight.js');
 const fs = require('fs');
 const path = require('path');
-const { StaticPool } = require("node-worker-threads-pool");
-const staticPool = new StaticPool({
-    size: 7,
-    task: (fileData) => {
-      const h = require('highlight.js');
-      if (fileData.split('\n').length > 10000) {
-          return h.highlight('plaintext', fileData).value;
-      }
-      return h.highlightAuto(fileData).value;
-    },
-});
 
 router.get('/f/:file', async (req, res) => {
     if (!await db.available()) return res.status(500).json({ "success": false, "message": "Internal server error - DataBase unreachable." });
@@ -56,8 +45,7 @@ router.get('/f/:file', async (req, res) => {
         case 'text':
             let fileData = fs.readFileSync(filePath, 'UTF8');
             //let output = hljs.highlightAuto(fileData).value
-            let output = await staticPool.exec(fileData);
-            res.render('files/text', { fileName: fileName, userName: file.uploaderName, rawFileURL: file.name, URL: req.protocol+'://'+req.get('host')+req.path, contents: output, version: version });
+            res.render('files/text', { fileName: fileName, userName: file.uploaderName, rawFileURL: file.name, URL: req.protocol+'://'+req.get('host')+req.path, contents: fileData, version: version });
             break;
         case 'other':
             // redir to raw
