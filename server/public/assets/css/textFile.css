@@ -46,8 +46,14 @@ a {
     margin-bottom: 0.17rem;
     /* max-width: 1%; */
 }
-body {
+/*body {
     margin-left: 2rem;
+}*/
+
+.hljs-ln-n {
+    margin-right: 0.55rem;
+    color: #464646;
+    /* color: #313131; */
 }
 
 body::-webkit-scrollbar {
@@ -64,4 +70,39 @@ body::-webkit-scrollbar-thumb {
 
 pre {
     font-family: monospace;
+}
+#loader {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    z-index: 0;
+    width: 150px;
+    height: 150px;
+    margin: -75px 0 0 -75px;
+    border: 16px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 16px solid #ff0000;
+    width: 120px;
+    height: 120px;
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;
+}
+  
+#loader-loading {
+    position: absolute;
+    left: 50%;
+    margin: -4.2rem 0 0 -4.2rem;
+    right: 50%;
+    top: 70%;
+    font-family: monospace;
+}
+          
+@-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+}
+          
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
